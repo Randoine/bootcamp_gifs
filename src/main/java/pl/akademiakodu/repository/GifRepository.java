@@ -25,4 +25,8 @@ public class GifRepository {
         }
         return null; //prawidlowo powinnismy zwrocic new gif lub wyjątek
     }
+
+    public List<Gif> getAllGifs(){
+    return ALL_GIFS;
+    }
 }
