@@ -30,9 +30,10 @@ public class GifController {
         return "gif-details";
     }
 
-//    @GetMapping("/favorites")
-//    public String gifFavourites(ModelMap modelMap){
-//        modelMap.addAttribute()
-//    }
+    @GetMapping("/favorites")
+    public String gifFavourites(ModelMap modelMap) {
+        modelMap.addAttribute("gifs", gifRepository.findFavorites());
+        return "favorites";
+    }
 
 }

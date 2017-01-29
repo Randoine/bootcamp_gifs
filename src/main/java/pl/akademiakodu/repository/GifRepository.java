@@ -3,6 +3,7 @@ package pl.akademiakodu.repository;
 import org.springframework.stereotype.Repository;
 import pl.akademiakodu.model.Gif;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,12 +31,13 @@ public class GifRepository {
     return ALL_GIFS;
     }
 
-//    public List<Gif> findFavorites(){
-//        for (Gif gif : ALL_GIFS){
-//            if (gif.isFavorite()){
-//                favourites.add(gif)
-//            }
-//        }
-//        return null; //prawidlowo powinnismy zwrocic new gif lub wyjątek
-//    }
+    public List<Gif> findFavorites(){
+        List<Gif> favourites = new ArrayList<>();
+        for (Gif gif : ALL_GIFS){
+            if (gif.isFavorite()){
+                favourites.add(gif);
+            }
+        }
+        return favourites;
+    }
 }
