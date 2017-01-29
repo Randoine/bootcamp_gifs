@@ -29,4 +29,13 @@ public class GifRepository {
     public List<Gif> getAllGifs(){
     return ALL_GIFS;
     }
+
+//    public List<Gif> findFavorites(){
+//        for (Gif gif : ALL_GIFS){
+//            if (gif.isFavorite()){
+//                favourites.add(gif)
+//            }
+//        }
+//        return null; //prawidlowo powinnismy zwrocic new gif lub wyjątek
+//    }
 }
