@@ -16,7 +16,7 @@ public class GifController {
 
     @GetMapping("/gif")
     public String gifDetails(ModelMap modelMap) {
-        Gif gif = new Gif("compiler-bot", "Rav", true);
+        Gif gif = new Gif("android-explosion", "Rav", true);
         modelMap.put("gif", gif);
         return "gif-details";
     }
