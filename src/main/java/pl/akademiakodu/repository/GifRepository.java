@@ -50,4 +50,14 @@ public class GifRepository {
         }
         return favourites;
     }
+
+    public List<Gif> findpart(String name){
+        List<Gif> gifs = new ArrayList<>();
+        for (Gif gif : ALL_GIFS){
+            if (gif.getName().contains(name)){
+                gifs.add(gif);
+            }
+        }
+        return gifs; //prawidlowo powinnismy zwrocic new gif lub wyjątek
+    }
 }
