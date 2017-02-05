@@ -4,6 +4,11 @@ body {
     font-family: 'varela round', sans-serif;
 }
 
+form {
+      margin:20px;
+
+}
+
 nav {
     background-color: #896bb3;
     box-shadow: none;
@@ -213,6 +218,11 @@ nav ul li.active, nav ul li:hover {
     background-color: #896bb3;
 }
 
+.categories .row .card {
+    background-color: #A9A9A9;
+    width=100%
+}
+
 .chip {
     margin-bottom: 1rem;
     margin-top: -1rem;
@@ -299,4 +309,5 @@ nav ul li.active, nav ul li:hover {
     .chip {
         margin-left: 0.8rem;
     }
-}
+
+ }
