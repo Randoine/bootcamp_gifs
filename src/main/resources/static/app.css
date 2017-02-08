@@ -218,9 +218,8 @@ nav ul li.active, nav ul li:hover {
     background-color: #896bb3;
 }
 
-.categories .row .card {
+.categories .row .card .add-category {
     background-color: #A9A9A9;
-    width=100%
 }
 
 .chip {
@@ -229,6 +228,11 @@ nav ul li.active, nav ul li:hover {
     border-radius: 8px;
     background-color: #f7f5fa;
     border: 1px solid #E0DCE6;
+}
+
+.flash-message .message-text {
+    text-align: center;
+    text-size: small;
 }
 
 @media only screen and (max-width: 992px) {

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.akademiakodu.dao.CategoryDao;
 import pl.akademiakodu.dao.CategoryDaoImpl;
 import pl.akademiakodu.model.Category;
@@ -43,8 +44,9 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Category category, ModelMap modelMap){
+    public String create(@ModelAttribute Category category, ModelMap modelMap, RedirectAttributes redirectAttributes){
         categoryDao.save(category);
+        redirectAttributes.addFlashAttribute("message", "You have succesfully added "+ category.getName()+" category!");
         return "redirect:categories";
     }
 }
