@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.akademiakodu.dao.CategoryDao;
-import pl.akademiakodu.dao.CategoryDaoImpl;
 import pl.akademiakodu.model.Category;
-import pl.akademiakodu.repository.CategoryRepository;
 import pl.akademiakodu.repository.GifRepository;
 
 @Controller
