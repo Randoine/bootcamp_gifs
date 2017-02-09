@@ -15,18 +15,22 @@
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<div th:replace="fragments/gif-search-bar :: search-bar"></div>
-
-<div class="gifs container">
-    <div class="row">
-        <div th:each="gif : ${gifs}" class="col s12 l4">
-            <a th:href="@{|/gif/${gif.name}|}">
-            <img th:src="@{'/gifs/'+${gif.name}+'.gif'}"/>
-            <a href="#" th:class="(${gif.favorite} ? 'un' : '') + 'mark favorite'"></a>
-            </a>
-        </div>
-    </div>
+<div class="upload container">
+    <h1>Please select gifs you want to upload</h1>
+    <form method="post" action="doUpload" enctype="multipart/form-data">
+        <table border="0">
+            <tr>
+                <td>Pick file:</td>
+                <td><input type="file" name="fileUpload"/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Upload" /></td>
+            </tr>
+        </table>
+    </form>
 </div>
+
+
 
 <script th:src="@{/vendor/jquery/jquery-1.11.3.js}"></script>
 <script th:src="@{/vendor/materialize/js/materialize.js}"></script>
