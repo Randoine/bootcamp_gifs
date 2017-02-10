@@ -15,10 +15,20 @@
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
 
+<div class="flash-message container">
+    <div class="row">
+        <div class="message-text">
+            <div th:if="${message}">
+                <h2 th:text="${message}"/>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="upload container">
-    <h1>Please select gifs you want to upload</h1>
+    <h3>Please select gif you want to upload</h3>
     <form method="post" action="doUpload" enctype="multipart/form-data">
-        <table border="0">
+        <table>
             <tr>
                 <td>Pick file:</td>
                 <td><input type="file" name="fileUpload"/></td>

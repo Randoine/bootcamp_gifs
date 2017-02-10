@@ -1,5 +1,6 @@
 package pl.akademiakodu.dao;
 
+
 import org.springframework.stereotype.Repository;
 import pl.akademiakodu.model.Category;
 

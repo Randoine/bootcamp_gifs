@@ -1,11 +1,10 @@
 package pl.akademiakodu.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Gif {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -15,6 +14,10 @@ public class Gif {
     private boolean favorite;
     private int categoryId;
 
+    @Lob
+    @Column(columnDefinition="mediumblob")
+    private byte[] data;
+
     public Gif() {
     }
 
@@ -23,6 +26,19 @@ public class Gif {
         this.username = username;
         this.favorite = favorite;
         this.categoryId = categoryId;
+    }
+
+    public Gif(String name, String username, boolean favorite, int categoryId, byte[] data) {
+        this.name = name;
+        this.username = username;
+        this.favorite = favorite;
+        this.categoryId = categoryId;
+        this.data = data;
+    }
+
+    public Gif(String name, byte[] data) {
+        this.name = name;
+        this.data = data;
     }
 
     public String getName() {
@@ -55,6 +71,14 @@ public class Gif {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
     }
 }
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.akademiakodu.dao.CategoryDao;
+import pl.akademiakodu.dao.GifDao;
 import pl.akademiakodu.model.Category;
 import pl.akademiakodu.repository.GifRepository;
 
@@ -20,7 +21,7 @@ public class CategoryController {
     private CategoryDao categoryDao;
 
     @Autowired
-    private GifRepository gifRepository;
+    private GifDao gifDao;
 
     @GetMapping("/categories")
     public String listCategories(ModelMap modelMap) {
@@ -31,7 +32,7 @@ public class CategoryController {
     @GetMapping("/category/{id}")
     public String categoryDetails(@PathVariable int id, ModelMap modelMap) {
         modelMap.put("category", categoryDao.findId(id));
-        modelMap.put("gifs", gifRepository.findByCategoryId(id));
+        modelMap.put("gifs", gifDao.findByCategoryId(id));
         return "category/category";
     }
 

@@ -1,8 +1,11 @@
 package pl.akademiakodu;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
+
 
 @SpringBootApplication
 public class Kwejk2Application {
