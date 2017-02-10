@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public class GifRepository {
+
     private static final List<Gif> ALL_GIFS = Arrays.asList(
             new Gif("android-explosion", "Chris Ramacciotti", false, 1),
             new Gif("ben-and-mike", "Ben Jakuben", true, 3),
