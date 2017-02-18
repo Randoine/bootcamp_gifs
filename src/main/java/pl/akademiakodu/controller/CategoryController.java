@@ -45,7 +45,21 @@ public class CategoryController {
     @PostMapping("/create")
     public String create(@ModelAttribute Category category, ModelMap modelMap, RedirectAttributes redirectAttributes){
         categoryDao.save(category);
-        redirectAttributes.addFlashAttribute("message", "You have succesfully added "+ category.getName()+" category!");
+        redirectAttributes.addFlashAttribute("message", "You have successfully added "+ category.getName()+" category!");
         return "redirect:categories";
+    }
+
+    @GetMapping("/category/{id}/edit")
+    public String categoryEdit (@PathVariable int id, ModelMap modelMap){
+        modelMap.addAttribute("category", new Category(id));
+        return "category/edit";
+    }
+
+    @PostMapping("/category/{id}/doEdit")
+    public String categoryDoEdit (@PathVariable int id, @ModelAttribute Category category, ModelMap modelMap,
+                                  RedirectAttributes redirectAttributes){
+        categoryDao.editName(category);
+        redirectAttributes.addFlashAttribute("message", "You have successfully renamed category!");
+        return "redirect:/categories";
     }
 }

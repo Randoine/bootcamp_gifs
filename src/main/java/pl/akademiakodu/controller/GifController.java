@@ -1,6 +1,7 @@
 package pl.akademiakodu.controller;
 
 
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class GifController {
 
     @Autowired
     private GifDao gifDao;
+    private static final String UPLOADS_DIR = "//uploads//";
 
     @GetMapping("/")
     public String listGifs(ModelMap modelMap) {
@@ -30,12 +32,12 @@ public class GifController {
         return "home";
     }
 
-    @GetMapping("/gif")
-    public String gifDetails(ModelMap modelMap) {
-        Gif gif = gifDao.findByName("android-explosion");
-        modelMap.put("gif", gif);
-        return "gif-details";
-    }
+//    @GetMapping("/gif")
+//    public String gifDetails(ModelMap modelMap) {
+//        Gif gif = gifDao.findByName("android-explosion");
+//        modelMap.put("gif", gif);
+//        return "gif-details";
+//    }
 
     @GetMapping("/favorites")
     public String gifFavourites(ModelMap modelMap) {
@@ -61,22 +63,24 @@ public class GifController {
     }
 
     @PostMapping("/doUpload")
-    public String handleFileUpload(HttpServletRequest request,
+    public String handleGifUpload(HttpServletRequest request,
                                    @RequestParam MultipartFile fileUpload,
                                    RedirectAttributes redirectAttributes) throws Exception {
 
         Gif gif = new Gif();
         System.out.println("Saving file: " + fileUpload.getOriginalFilename());
+        String realPathtoUploads =  request.getServletContext().getRealPath(UPLOADS_DIR);
+        fileUpload.transferTo(new File(realPathtoUploads+fileUpload.getOriginalFilename()));
         gif.setName(fileUpload.getOriginalFilename());
-        gif.setData(fileUpload.getBytes());
         gif.setCategoryId(1);
         gif.setFavorite(false);
         gif.setUsername("Anonymous");
+        //TODO: Change hardcoded username to variable after Spring Security login implementation
+        gif.setPath(realPathtoUploads+fileUpload.getOriginalFilename());
         gifDao.save(gif);
 
+
         redirectAttributes.addFlashAttribute("message", "You have succesfully uploaded " + gif.getName() + "!");
-        return "redirect:file-upload";
+        return "redirect:upload";
     }
-
-
 }

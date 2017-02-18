@@ -9,4 +9,6 @@ public interface CategoryDao {
     List getAllCategoriees();
     Category findId(int id);
     void save(Category category);
+    void editName(Category category);
+
 }

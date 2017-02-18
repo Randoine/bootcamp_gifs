@@ -12,6 +12,11 @@ form {
 nav {
     background-color: #896bb3;
     box-shadow: none;
+
+}
+
+.navbar-fixed{
+margin-bottom: 10px;
 }
 
 nav .brand-logo, nav ul li.active a {
@@ -232,7 +237,21 @@ nav ul li.active, nav ul li:hover {
 
 .flash-message .message-text {
     text-align: center;
-    text-size: small;
+    font-size: large;
+}
+ .row .col.s11 {
+text-align: right;
+padding-right:0;
+}
+
+.btn {
+      width:100%
+      display: block;
+      background-color: #896bb3;
+}
+.tools{
+display: inline-block;
+text-align: right;
 }
 
 @media only screen and (max-width: 992px) {
@@ -314,4 +333,8 @@ nav ul li.active, nav ul li:hover {
         margin-left: 0.8rem;
     }
 
+    .btn {
+          width:100%
+          display: block;
+     }
  }

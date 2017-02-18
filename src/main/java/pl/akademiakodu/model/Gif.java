@@ -13,10 +13,9 @@ public class Gif {
     private String username;
     private boolean favorite;
     private int categoryId;
+    private String path;
 
-    @Lob
-    @Column(columnDefinition="mediumblob")
-    private byte[] data;
+
 
     public Gif() {
     }
@@ -28,17 +27,16 @@ public class Gif {
         this.categoryId = categoryId;
     }
 
-    public Gif(String name, String username, boolean favorite, int categoryId, byte[] data) {
+    public Gif(String name, String username, boolean favorite, int categoryId, String path) {
         this.name = name;
         this.username = username;
         this.favorite = favorite;
         this.categoryId = categoryId;
-        this.data = data;
+        this.path = path;
     }
 
-    public Gif(String name, byte[] data) {
-        this.name = name;
-        this.data = data;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -73,12 +71,12 @@ public class Gif {
         this.categoryId = categoryId;
     }
 
-    public byte[] getData() {
-        return data;
+    public String getPath() {
+        return path;
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    public void setPath(String path) {
+        this.path = path;
     }
 }
 

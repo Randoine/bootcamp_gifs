@@ -26,7 +26,7 @@ public class CategoryDaoImpl implements CategoryDao {
     @Transactional
     public Category findId(int id) {
         Category result = (Category) entityManager.
-                createQuery("FROM Category E WHERE E.id="+ id).getSingleResult();
+                createQuery("FROM Category E WHERE E.id=" + id).getSingleResult();
         return result;
     }
 
@@ -34,5 +34,11 @@ public class CategoryDaoImpl implements CategoryDao {
     @Transactional
     public void save(Category category) {
         entityManager.persist(category);
+    }
+
+    @Override
+    @Transactional
+    public void editName(Category category) {
+        entityManager.merge(category);
     }
 }

@@ -38,7 +38,7 @@ public class GifDaoImpl implements GifDao {
     @Override
     @Transactional
     public List<Gif> findByCategoryId(int categoryId) {
-        return entityManager.createQuery("FROM Gif E WHERE E.category_id=" + categoryId).getResultList();
+        return entityManager.createQuery("FROM Gif E WHERE E.categoryId=" + categoryId).getResultList();
     }
 
     @Override
