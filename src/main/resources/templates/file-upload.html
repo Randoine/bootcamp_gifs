@@ -17,29 +17,36 @@
 
 <div class="flash-message container">
     <div class="row">
-        <div class="message-text">
-            <div th:if="${message}">
-                <h2 th:text="${message}"/>
+        <div class="col s12">
+            <div class="message-text">
+                <div th:if="${message}">
+                    <p th:text="${message}"></p>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <div class="upload container">
-    <h3>Please select gif you want to upload</h3>
     <form method="post" action="doUpload" enctype="multipart/form-data">
-        <table>
-            <tr>
-                <td>Pick file:</td>
-                <td><input type="file" name="fileUpload"/></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="Upload" /></td>
-            </tr>
-        </table>
+        <div class="row">
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>File</span>
+                    <input type="file" name="fileUpload">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="Select file you want to upload">
+                </div>
+            </div>
+            <div class="row center-align">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
     </form>
 </div>
-
 
 
 <script th:src="@{/vendor/jquery/jquery-1.11.3.js}"></script>
