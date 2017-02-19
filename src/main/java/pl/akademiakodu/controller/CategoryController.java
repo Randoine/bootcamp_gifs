@@ -56,10 +56,23 @@ public class CategoryController {
     }
 
     @PostMapping("/category/{id}/doEdit")
-    public String categoryDoEdit (@PathVariable int id, @ModelAttribute Category category, ModelMap modelMap,
+    public String categoryDoEdit (@ModelAttribute Category category, ModelMap modelMap,
                                   RedirectAttributes redirectAttributes){
         categoryDao.editName(category);
         redirectAttributes.addFlashAttribute("message", "You have successfully renamed category!");
+        return "redirect:/categories";
+    }
+
+    @GetMapping("/category/{id}/delete")
+    public String categoryDelete (@PathVariable int id, ModelMap modelMap){
+        modelMap.put("category", categoryDao.findId(id));
+        return "category/delete";
+    }
+
+    @GetMapping("/category/{id}/doDelete")
+    public String categoryRemove (@PathVariable int id, ModelMap modelMap, RedirectAttributes redirectAttributes){
+        categoryDao.delete(categoryDao.findId(id));
+        redirectAttributes.addFlashAttribute("message", "You have successfully deleted category!");
         return "redirect:/categories";
     }
 }

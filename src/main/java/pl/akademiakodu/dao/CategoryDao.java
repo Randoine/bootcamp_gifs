@@ -10,5 +10,6 @@ public interface CategoryDao {
     Category findId(int id);
     void save(Category category);
     void editName(Category category);
+    void delete(Category category);
 
 }

@@ -41,4 +41,10 @@ public class CategoryDaoImpl implements CategoryDao {
     public void editName(Category category) {
         entityManager.merge(category);
     }
+
+    @Override
+    @Transactional
+    public void delete(Category category) {
+        entityManager.remove(category);
+    }
 }
