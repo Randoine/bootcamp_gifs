@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="icon" th:href="@{/favicon.png}"/>
+
+    <link rel="stylesheet" th:href="@{/vendor/materialize/css/materialize.css}"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" th:href="@{/app.css}"/>
+
+    <title th:text="'giflib | ' + ${gif.name}+ ' edition'">Kwejk</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="flash-message container">
+    <div class="row">
+        <div class="col s12">
+            <div class="message-text">
+                <div th:if="${message}">
+                    <p th:text="${message}"> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="gif-data container">
+    <div class="col s1">
+        <div class="chip" th:text="${gif.title}">gif title</div>
+    </div>
+    <form class="name_change row input-field col s12" th:action="@{'/gif/'+ ${gif.id} + '/changeTitle'}" method="post">
+        <input id="new_name" th:field="${gifNew.title}" type="text" class="validate">
+        <label for="new_name">Set new Name</label>
+        <div class="center-align">
+            <button class="btn waves-effect waves-light" type="submit" name="action">Save</button>
+        </div>
+    </form>
+
+
+    <div class="set_favorite row ">
+        <div class="container center-align">
+            <p th:text="'Favorite?'"></p>
+            <form class="confirmation" th:action="@{'/gif/'+ ${gif.id} +'/doFavorite'}">
+                <button class="btn waves-effect waves-light" type="submit">YES!</button>
+            </form>
+            <form class="confirmation" th:action="@{'/gif/'+ ${gif.id} +'/unFavorite'}">
+                <button class="btn waves-effect waves-light" type="submit">NO!</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="categories row">
+        <label>Pick new category for this gif:</label>
+        <div class="pick_category row">
+            <div th:each="category : ${categories}" class="col s2">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">
+                            <a th:href="@{'/gif/'+${gif.id}+'/setCategory/'+${category.id}}" th:text="${category.name}">
+                                Category Name</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/vendor/jquery/jquery-1.11.3.js}"></script>
+<script th:src="@{/vendor/materialize/js/materialize.js}"></script>
+<script th:src="@{/app.js}"></script>
+</body>
+</html>

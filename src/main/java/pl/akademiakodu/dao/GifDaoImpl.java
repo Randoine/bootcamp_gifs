@@ -2,6 +2,7 @@ package pl.akademiakodu.dao;
 
 
 import org.springframework.stereotype.Repository;
+import pl.akademiakodu.model.Category;
 import pl.akademiakodu.model.Gif;
 
 import javax.persistence.EntityManager;
@@ -29,10 +30,17 @@ public class GifDaoImpl implements GifDao {
     @Override
     @Transactional
     public Gif findByName(String name) {
-        Gif result = (Gif) entityManager.createQuery("FROM Gif E WHERE E.name LIKE :name")
+        return (Gif) entityManager.createQuery("FROM Gif E WHERE E.name LIKE :name")
                 .setParameter("name", name+".gif")
                 .getSingleResult();
-        return result;
+    }
+
+    @Override
+    @Transactional
+    public Gif findById(Long id) {
+        return (Gif) entityManager.createQuery("FROM Gif E WHERE E.id= :id")
+                .setParameter("id", id)
+                .getSingleResult();
     }
 
     @Override
@@ -58,10 +66,17 @@ public class GifDaoImpl implements GifDao {
         List<Gif> gifs = new ArrayList<>();
 
         for (Gif gif : ALL_GIFS) {
-            if (gif.getName().contains(name)) {
+            if (gif.getName().contains(name) || gif.getTitle().contains(name)) {
                 gifs.add(gif);
             }
         }
         return gifs;
     }
+
+    @Override
+    @Transactional
+    public void edit(Gif gif) {entityManager.merge(gif);
+    }
+
+
 }

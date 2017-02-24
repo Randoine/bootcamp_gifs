@@ -259,6 +259,16 @@ nav ul li.active, nav ul li:hover {
     display: inline-block;
 }
 
+.set_favorite{
+border-top-style: dotted;
+border-bottom-style: dotted;
+border-width: 1px;
+
+}
+
+.set_favorite .confirmation{
+margin: 5px;
+}
 @media only screen and (max-width: 992px) {
     nav .brand-logo {
         left: 0;

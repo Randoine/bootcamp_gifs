@@ -9,6 +9,7 @@ public class Gif {
     @GeneratedValue
     private Long id;
 
+    private String title;
     private String name;
     private String username;
     private boolean favorite;
@@ -20,19 +21,12 @@ public class Gif {
     public Gif() {
     }
 
-    public Gif(String name, String username, boolean favorite, int categoryId) {
-        this.name = name;
-        this.username = username;
-        this.favorite = favorite;
-        this.categoryId = categoryId;
+    public String getTitle() {
+        return title;
     }
 
-    public Gif(String name, String username, boolean favorite, int categoryId, String path) {
-        this.name = name;
-        this.username = username;
-        this.favorite = favorite;
-        this.categoryId = categoryId;
-        this.path = path;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Long getId() {
@@ -77,6 +71,18 @@ public class Gif {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    @Override
+    public String toString() {
+        return "Gif{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", favorite=" + favorite +
+                ", categoryId=" + categoryId +
+                ", path='" + path + '\'' +
+                '}';
     }
 }
 

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.akademiakodu.dao.CategoryDao;
 import pl.akademiakodu.dao.GifDao;
 import pl.akademiakodu.model.Category;
-import pl.akademiakodu.repository.GifRepository;
+
 
 @Controller
 public class CategoryController {
