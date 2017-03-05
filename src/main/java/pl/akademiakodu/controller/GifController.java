@@ -15,6 +15,8 @@ import pl.akademiakodu.model.Gif;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @Controller
 public class GifController {
@@ -47,41 +49,40 @@ public class GifController {
 
     @PostMapping("/search")
     public String search(@ModelAttribute Gif gif, ModelMap modelMap) {
-        modelMap.addAttribute("gifs", gifDao.findpart(gif.getName()));
+        modelMap.addAttribute("gifs", gifDao.findpart(gif.getTitle()));
         return "home";
     }
 
     @GetMapping("/upload")
-    public String showUploadForm(HttpServletRequest request) {
+    public String showUploadForm(HttpServletRequest request, ModelMap modelMap) {
+        modelMap.addAttribute("gif", new Gif());
         return "file-upload";
     }
 
     @PostMapping("/doUpload")
-    public String handleGifUpload(HttpServletRequest request,
+    public String handleGifUpload(@ModelAttribute Gif gif, HttpServletRequest request,
                                   @RequestParam MultipartFile fileUpload,
                                   RedirectAttributes redirectAttributes) throws Exception {
-
-        Gif gif = new Gif();
+        //TODO: Zrobić formularz w którym się określa od razu tytuł i kategorię. Obsłużyć też błąd z title że nie mogą się powtarzać
         System.out.println("Saving file: " + fileUpload.getOriginalFilename());
-        String realPathtoUploads = request.getServletContext().getRealPath(UPLOADS_DIR);
-        fileUpload.transferTo(new File(realPathtoUploads + fileUpload.getOriginalFilename()));
-        gif.setName(FilenameUtils.removeExtension(fileUpload.getOriginalFilename()));
-        gif.setTitle(gif.getName());
+        String realPathToUploads = request.getServletContext().getRealPath(UPLOADS_DIR); //Sets saving directory
+        gif.setName(fileUpload.getOriginalFilename());
+        gif.setTitle(FilenameUtils.removeExtension(gif.getName()));
         gif.setCategoryId(1);
         gif.setFavorite(false);
         gif.setUsername("Anonymous");
         //TODO: Change hardcoded username to variable after Spring Security login implementation
-        gif.setPath(realPathtoUploads + fileUpload.getOriginalFilename());
         gifDao.save(gif);
-
-
+        Long filename= gifDao.getId(gif.getTitle());
+        gif.setPath(realPathToUploads + filename + "." + FilenameUtils.getExtension(fileUpload.getOriginalFilename()));
+        gifDao.edit(gif);
+        fileUpload.transferTo(new File(gif.getPath()));
         redirectAttributes.addFlashAttribute("message", "You have succesfully uploaded " + gif.getName() + "!");
         return "redirect:upload";
     }
 
     @GetMapping("/gif/{id}/edit")
     public String gifEdit(@PathVariable Long id, ModelMap modelMap) {
-        System.out.println(gifDao.findById(id));
         modelMap.addAttribute("gif", gifDao.findById(id));
         modelMap.addAttribute("gifNew", new Gif());
         modelMap.addAttribute("categories", categoryDao.getAllCategoriees());
@@ -126,4 +127,24 @@ public class GifController {
                 "Gif " + gif.getTitle() + " is now in " + category.getName() + " category !");
         return "redirect:/gif/{gifid}/edit";
     }
+
+    @GetMapping("/gif/{id}/delete")
+    public String gifDelete(@PathVariable Long id, ModelMap modelMap) {
+        modelMap.addAttribute("gif", gifDao.findById(id));
+        return "delete";
+    }
+
+    @GetMapping("/gif/{id}/doDelete")
+    public String gifDoDelete(@PathVariable Long id, @ModelAttribute Gif gif, ModelMap modelMap, RedirectAttributes redirectAttributes){
+
+        gif = gifDao.findById(id);
+        File file = new File(gif.getPath());
+        gifDao.delete(gif);
+
+        redirectAttributes.addFlashAttribute("message",
+                "Gif " + gif.getTitle() + " successfully deleted!");
+
+        return "redirect:/";
+    }
+
 }

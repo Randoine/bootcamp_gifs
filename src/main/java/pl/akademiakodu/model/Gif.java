@@ -73,16 +73,5 @@ public class Gif {
         this.path = path;
     }
 
-    @Override
-    public String toString() {
-        return "Gif{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                ", favorite=" + favorite +
-                ", categoryId=" + categoryId +
-                ", path='" + path + '\'' +
-                '}';
-    }
 }
 

@@ -78,5 +78,15 @@ public class GifDaoImpl implements GifDao {
     public void edit(Gif gif) {entityManager.merge(gif);
     }
 
+    @Override
+    @Transactional
+    public Long getId(String name) {
+        return findByName(name).getId();
+    }
 
+    @Override
+    @Transactional
+    public void delete(Gif gif) {
+        entityManager.remove(gif);
+    }
 }

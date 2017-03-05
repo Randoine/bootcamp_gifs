@@ -10,7 +10,7 @@
             <form th:action="@{/search}" method="post">
                 <div class="input-field">
                     <input name="q" type="search" placeholder="Wyszukiwanie..." required="required" autocomplete="off"
-                           th:field="${gif.name}"/>
+                           th:field="${gif.title}"/>
                     <i class="material-icons">search</i>
                 </div>
             </form>

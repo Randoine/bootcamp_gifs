@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" th:href="@{/app.css}"/>
 
-    <title th:text="'giflib | ' + ${gif.name}">Kwejk</title>
+    <title th:text="'giflib | ' + ${gif.title}">Kwejk</title>
 </head>
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
@@ -31,7 +31,7 @@
 <div class="gif-detail container">
     <div class="frame row">
         <div class="col s12">
-            <img th:src="'/uploads/'+${gif.name}+'.gif'" alt="gif"/>
+            <img th:src="'/uploads/'+${gif.id}+'.gif'" alt="gif"/>
             <a href="#" th:class="(${gif.favorite} ? 'un' : '') + 'mark favorite'"></a>
         </div>
     </div>
@@ -49,14 +49,14 @@
         <div class="col s12 l6">
             <div class="share">
                 <a class="btn right" href="#">Copy</a>
-                <span th:text="'http://gif.fy/' + ${gif.name}">URL</span>
+                <span th:text="'http://gif.fy/' + ${gif.title}">URL</span>
             </div>
         </div>
         <div class="col s12 l6 right-align">
             <div class="tools">
                 <a th:href="@{'/gif/'+${gif.id}+'/edit'}" class="btn waves-effect ">
                     <i class="small material-icons">mode_edit</i></a>
-                <a th:href="@{'/gif/'+${gif.id}+'/delete'}" class="btn waves-effect ">
+                <a th:href="@{'/gif/'+${gif.id}+'/delete'}" class="btn waves-effect">
                     <i class="small material-icons">delete</i></a>
             </div>
         </div>

@@ -8,10 +8,13 @@ public interface GifDao {
     void save(Gif gif);
     Gif findByName(String name);
     Gif findById(Long id);
+    Long getId(String name);
     List<Gif> findByCategoryId(int categoryId);
     List<Gif> getAllGifs();
     List<Gif> findFavorites();
     List<Gif> findpart(String name);
     void edit (Gif gif);
+    void delete (Gif gif);
+
 
 }
