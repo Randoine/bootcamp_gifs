@@ -1,6 +1,6 @@
 # bootcamp_gifs
 
-Webapp which allows user to upload, view to some extent edit gif files.
+Webapp which allows user to upload, view and to some extent, edit gif files.
 
 Technologies and frameworks used:
 - Spring MVC
