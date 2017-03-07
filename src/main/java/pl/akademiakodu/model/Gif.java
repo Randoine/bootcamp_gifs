@@ -1,5 +1,7 @@
 package pl.akademiakodu.model;
 
+
+
 import javax.persistence.*;
 
 @Entity
@@ -13,7 +15,10 @@ public class Gif {
     private String name;
     private String username;
     private boolean favorite;
-    private int categoryId;
+
+    @OneToOne
+    private Category category;
+
     private String path;
 
 
@@ -57,12 +62,12 @@ public class Gif {
         this.favorite = favorite;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getPath() {

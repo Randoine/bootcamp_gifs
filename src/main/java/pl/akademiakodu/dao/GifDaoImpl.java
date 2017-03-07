@@ -1,11 +1,13 @@
 package pl.akademiakodu.dao;
 
 
+
 import org.springframework.stereotype.Repository;
 import pl.akademiakodu.model.Category;
 import pl.akademiakodu.model.Gif;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -29,9 +31,9 @@ public class GifDaoImpl implements GifDao {
 
     @Override
     @Transactional
-    public Gif findByName(String name) {
-        return (Gif) entityManager.createQuery("FROM Gif E WHERE E.name LIKE :name")
-                .setParameter("name", name+".gif")
+    public Gif findByTitle(String title) throws NonUniqueResultException {
+        return (Gif) entityManager.createQuery("FROM Gif WHERE title LIKE :title")
+                .setParameter("title", title)
                 .getSingleResult();
     }
 
@@ -45,8 +47,8 @@ public class GifDaoImpl implements GifDao {
 
     @Override
     @Transactional
-    public List<Gif> findByCategoryId(int categoryId) {
-        return entityManager.createQuery("FROM Gif E WHERE E.categoryId=" + categoryId).getResultList();
+    public List<Gif> findByCategory(Category category) {
+        return entityManager.createQuery("FROM Gif WHERE category_id=" + category.getId()).getResultList();
     }
 
     @Override
@@ -81,7 +83,7 @@ public class GifDaoImpl implements GifDao {
     @Override
     @Transactional
     public Long getId(String name) {
-        return findByName(name).getId();
+        return findByTitle(name).getId();
     }
 
     @Override

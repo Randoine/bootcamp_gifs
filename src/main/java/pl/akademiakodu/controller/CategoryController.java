@@ -8,6 +8,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.akademiakodu.dao.CategoryDao;
 import pl.akademiakodu.dao.GifDao;
 import pl.akademiakodu.model.Category;
+import pl.akademiakodu.model.Gif;
 
 
 @Controller
@@ -23,13 +24,14 @@ public class CategoryController {
     @GetMapping("/categories")
     public String listCategories(ModelMap modelMap) {
         modelMap.addAttribute("categories", categoryDao.getAllCategoriees());
+        modelMap.addAttribute("gif", new Gif());
         return "category/categories";
     }
 
     @GetMapping("/category/{id}")
     public String categoryDetails(@PathVariable int id, ModelMap modelMap) {
-        modelMap.put("category", categoryDao.findId(id));
-        modelMap.put("gifs", gifDao.findByCategoryId(id));
+        modelMap.addAttribute("category", categoryDao.findId(id));
+        modelMap.addAttribute("gifs", gifDao.findByCategory(categoryDao.findId(id)));
         return "category/category";
     }
 

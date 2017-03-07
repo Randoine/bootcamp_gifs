@@ -10,13 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.akademiakodu.dao.CategoryDao;
 import pl.akademiakodu.dao.GifDao;
-import pl.akademiakodu.model.Category;
 import pl.akademiakodu.model.Gif;
 
+import javax.persistence.NonUniqueResultException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.IOException;
 
 @Controller
 public class GifController {
@@ -56,6 +55,7 @@ public class GifController {
     @GetMapping("/upload")
     public String showUploadForm(HttpServletRequest request, ModelMap modelMap) {
         modelMap.addAttribute("gif", new Gif());
+        modelMap.addAttribute("categories", categoryDao.getAllCategoriees());
         return "file-upload";
     }
 
@@ -63,22 +63,25 @@ public class GifController {
     public String handleGifUpload(@ModelAttribute Gif gif, HttpServletRequest request,
                                   @RequestParam MultipartFile fileUpload,
                                   RedirectAttributes redirectAttributes) throws Exception {
-        //TODO: Zrobić formularz w którym się określa od razu tytuł i kategorię. Obsłużyć też błąd z title że nie mogą się powtarzać
-        System.out.println("Saving file: " + fileUpload.getOriginalFilename());
-        String realPathToUploads = request.getServletContext().getRealPath(UPLOADS_DIR); //Sets saving directory
-        gif.setName(fileUpload.getOriginalFilename());
-        gif.setTitle(FilenameUtils.removeExtension(gif.getName()));
-        gif.setCategoryId(1);
-        gif.setFavorite(false);
-        gif.setUsername("Anonymous");
-        //TODO: Change hardcoded username to variable after Spring Security login implementation
-        gifDao.save(gif);
-        Long filename= gifDao.getId(gif.getTitle());
-        gif.setPath(realPathToUploads + filename + "." + FilenameUtils.getExtension(fileUpload.getOriginalFilename()));
-        gifDao.edit(gif);
-        fileUpload.transferTo(new File(gif.getPath()));
-        redirectAttributes.addFlashAttribute("message", "You have succesfully uploaded " + gif.getName() + "!");
-        return "redirect:upload";
+
+        if (gif.getTitle().equals(gifDao.findByTitle(gif.getTitle()).getTitle())) {
+            redirectAttributes.addFlashAttribute("message", "Please select different title");
+            return "redirect:upload";
+        } else {
+            System.out.println("Saving file: " + fileUpload.getOriginalFilename());
+            String realPathToUploads = request.getServletContext().getRealPath(UPLOADS_DIR); //Sets saving directory
+            gif.setName(fileUpload.getOriginalFilename());
+            gif.setFavorite(false);
+            gif.setUsername("Anonymous");
+            //TODO: Change hardcoded username to variable after Spring Security login implementation
+            gifDao.save(gif);
+            Long filename = gifDao.getId(gif.getTitle());
+            gif.setPath(realPathToUploads + filename + "." + FilenameUtils.getExtension(fileUpload.getOriginalFilename()));
+            gifDao.edit(gif);
+            fileUpload.transferTo(new File(gif.getPath()));
+            redirectAttributes.addFlashAttribute("message", "You have succesfully uploaded " + gif.getName() + "!");
+            return "redirect:upload";
+        }
     }
 
     @GetMapping("/gif/{id}/edit")
@@ -116,16 +119,15 @@ public class GifController {
         return "redirect:edit";
     }
 
-    @GetMapping("/gif/{gifid}/setCategory/{categoryid}")
-    public String setCategory(@PathVariable Long gifid, @PathVariable int categoryid, ModelMap modelMap,
+    @GetMapping("/gif/{gifId}/setCategory/{categoryId}")
+    public String setCategory(@PathVariable Long gifId, @PathVariable int categoryId, ModelMap modelMap,
                               RedirectAttributes redirectAttributes) {
-        Gif gif = gifDao.findById(gifid);
-        Category category = categoryDao.findId(categoryid);
-        gif.setCategoryId(categoryid);
+        Gif gif = gifDao.findById(gifId);
+        gif.setCategory(categoryDao.findId(categoryId));
         gifDao.edit(gif);
         redirectAttributes.addFlashAttribute("message",
-                "Gif " + gif.getTitle() + " is now in " + category.getName() + " category !");
-        return "redirect:/gif/{gifid}/edit";
+                "Gif " + gif.getTitle() + " is now in " + gif.getCategory().getName() + " category !");
+        return "redirect:/gif/{gifId}/edit";
     }
 
     @GetMapping("/gif/{id}/delete")
@@ -135,7 +137,7 @@ public class GifController {
     }
 
     @GetMapping("/gif/{id}/doDelete")
-    public String gifDoDelete(@PathVariable Long id, @ModelAttribute Gif gif, ModelMap modelMap, RedirectAttributes redirectAttributes){
+    public String gifDoDelete(@PathVariable Long id, @ModelAttribute Gif gif, ModelMap modelMap, RedirectAttributes redirectAttributes) {
 
         gif = gifDao.findById(id);
         File file = new File(gif.getPath());
