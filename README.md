@@ -4,6 +4,7 @@ Webapp which allows user to upload, view and to some extent, edit gif files.
 
 Technologies and frameworks used:
 - Spring MVC
+- Spring Boot
 - Hibernate
 - Thymeleaf
 - Materialize
