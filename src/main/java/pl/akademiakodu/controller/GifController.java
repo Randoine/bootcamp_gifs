@@ -12,10 +12,8 @@ import pl.akademiakodu.dao.CategoryDao;
 import pl.akademiakodu.dao.GifDao;
 import pl.akademiakodu.model.Gif;
 
-import javax.persistence.NonUniqueResultException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
 
 @Controller
 public class GifController {
@@ -64,25 +62,19 @@ public class GifController {
                                   @RequestParam MultipartFile fileUpload,
                                   RedirectAttributes redirectAttributes) throws Exception {
 
-        if (gif.getTitle().equals(gifDao.findByTitle(gif.getTitle()).getTitle())) {
-            redirectAttributes.addFlashAttribute("message", "Please select different title");
-            return "redirect:upload";
-        } else {
-            System.out.println("Saving file: " + fileUpload.getOriginalFilename());
-            String realPathToUploads = request.getServletContext().getRealPath(UPLOADS_DIR); //Sets saving directory
-            gif.setName(fileUpload.getOriginalFilename());
-            gif.setFavorite(false);
-            gif.setUsername("Anonymous");
-            //TODO: Change hardcoded username to variable after Spring Security login implementation
-            gifDao.save(gif);
-            Long filename = gifDao.getId(gif.getTitle());
-            gif.setPath(realPathToUploads + filename + "." + FilenameUtils.getExtension(fileUpload.getOriginalFilename()));
-            gifDao.edit(gif);
-            fileUpload.transferTo(new File(gif.getPath()));
-            redirectAttributes.addFlashAttribute("message", "You have succesfully uploaded " + gif.getName() + "!");
-            return "redirect:upload";
-        }
+        String realPathToUploads = request.getServletContext().getRealPath(UPLOADS_DIR); //Sets saving directory
+        gif.setName(fileUpload.getOriginalFilename());
+        gif.setFavorite(false);
+        gif.setUsername("Anonymous");
+        //TODO: Change hardcoded username to variable after Spring Security login implementation
+        Long filename = gifDao.saveAndGetId(gif);
+        gif.setPath(realPathToUploads + filename + "." + FilenameUtils.getExtension(fileUpload.getOriginalFilename()));
+        gifDao.edit(gif);
+        fileUpload.transferTo(new File(gif.getPath()));
+        redirectAttributes.addFlashAttribute("message", "You have succesfully uploaded " + gif.getName() + "!");
+        return "redirect:upload";
     }
+
 
     @GetMapping("/gif/{id}/edit")
     public String gifEdit(@PathVariable Long id, ModelMap modelMap) {

@@ -33,20 +33,20 @@
             <div class="file-field input-field">
                 <div class="btn">
                     <span>File</span>
-                    <input type="file" name="fileUpload">
+                    <input type="file" name="fileUpload" required>
                 </div>
                 <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" placeholder="Select file you want to upload">
+                    <input class="file-path validate" type="text" placeholder="Select file you want to upload" required>
                 </div>
             </div>
         </div>
         <div class="input-field col s6">
-            <input id="title" type="text" class="validate" th:field="*{title}">
+            <input id="title" type="text" class="validate" th:field="*{title}" required>
             <label for="title">Title</label>
         </div>
 
         <div class="col s6">
-            <select class="browser-default" th:field="*{category.id}">
+            <select class="browser-default" th:field="*{category.id}" required>
                 <option th:value="0" disabled selected>Choose category</option>
                 <option th:each="a : ${categories}" th:value="${a.id}" th:text="${a.name}"/>
             </select>

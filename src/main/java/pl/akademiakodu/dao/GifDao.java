@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface GifDao {
     void save(Gif gif);
+    Long saveAndGetId(Gif gif);
     Gif findByTitle(String name);
     Gif findById(Long id);
     Long getId(String name);

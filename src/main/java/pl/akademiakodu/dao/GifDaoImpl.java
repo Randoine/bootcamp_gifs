@@ -20,6 +20,7 @@ public class GifDaoImpl implements GifDao {
     private EntityManager entityManager;
 
 
+
     public GifDaoImpl() {
     }
 
@@ -27,6 +28,14 @@ public class GifDaoImpl implements GifDao {
     @Transactional
     public void save(Gif gif) {
         entityManager.persist(gif);
+    }
+
+    @Override
+    @Transactional
+    public Long saveAndGetId(Gif gif){
+        entityManager.persist(gif);
+        entityManager.flush();
+        return gif.getId();
     }
 
     @Override
@@ -91,4 +100,5 @@ public class GifDaoImpl implements GifDao {
     public void delete(Gif gif) {
         entityManager.remove(gif);
     }
+
 }
